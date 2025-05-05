@@ -1,67 +1,50 @@
 import React, { useReducer } from 'react';
 
-enum ActionType {
-	Increment,
-	Decrement,
-	SetIncrementBy,
+interface State {
+	balance: number;
 }
 
 interface Action {
-	type: ActionType;
+	type: 'deposit' | 'withdraw';
 	payload: number;
 }
 
-interface State {
-	count: number;
-	incrementBy: number;
+function reducer(state: State, action: Action): State {
+	switch (action.type) {
+		case 'deposit':
+			return { ...state, balance: state.balance + action.payload };
+
+		case 'withdraw':
+			return { ...state, balance: state.balance - action.payload };
+
+		default:
+			throw new Error();
+	}
 }
 
 const App: React.FC = () => {
-	const [state, dispatch] = useReducer(reducer, {
-		count: 0,
-		incrementBy: 2,
-	} as State);
-
-	function reducer(state: State, action: Action): State {
-		switch (action.type) {
-			case ActionType.Increment:
-				return { ...state, count: state.count + state.incrementBy }; //staet + action.payload;
-
-			case ActionType.Decrement:
-				return { ...state, count: state.count - state.incrementBy }; //staet - action.payload;
-
-			case ActionType.SetIncrementBy:
-				return { ...state, incrementBy: action.payload }; //staet - action.payload;
-			default:
-				throw new Error();
-		}
-	}
+	const [state, dispatch] = useReducer(reducer, { balance: 0 } as State);
+	const [amount, setAmount] = React.useState<number>(0);
 
 	return (
 		<div>
-			Use Reducer: {state.count}
-			<br />
+			{state.balance}
 			<input
-				title="increment by"
-				value={state.incrementBy}
-				onChange={(e) =>
-					dispatch({
-						type: ActionType.SetIncrementBy,
-						payload: Number(e.target.value),
-					})
-				}
+				title="Amount"
+				type="number"
+				onChange={(e) => setAmount(Number(e.target.value))}
 			/>
 			<button
 				type="button"
-				onClick={() => dispatch({ type: ActionType.Increment } as Action)}
+				onClick={() => dispatch({ type: 'deposit', payload: amount })}
 			>
-				Increment count
+				Deposit
 			</button>
 			<button
 				type="button"
-				onClick={() => dispatch({ type: ActionType.Decrement } as Action)}
+				onClick={() => dispatch({ type: 'withdraw', payload: amount })}
 			>
-				Decrement count
+				Withdraw
 			</button>
 		</div>
 	);
