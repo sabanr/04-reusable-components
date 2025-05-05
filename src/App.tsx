@@ -1,6 +1,18 @@
-function App() {
-  const [count, setCount] = useState(0);
+import React, { useState } from 'react';
 
-  return <div>{count}</div>;
-}
+const App: React.FC = () => {
+	const [count, setCount] = useState(0);
+
+	return (
+		<div>
+			{count}
+			<button type="button" onClick={() => setCount((c) => c + 1)}>
+				Increment
+			</button>
+			<button type="button" onClick={() => setCount((c) => c - 1)}>
+				Decrement
+			</button>
+		</div>
+	);
+};
 export default App;
