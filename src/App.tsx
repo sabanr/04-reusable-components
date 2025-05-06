@@ -5,6 +5,7 @@ const HomePage = lazy(() => import('./pages/Homepage'));
 const Dashboard = lazy(() => import('./pages/Dashboard'));
 const Profile = lazy(() => import('./pages/Profile'));
 const Settings = lazy(() => import('./pages/Settings'));
+const Products = lazy(() => import('./pages/Products'));
 const PageNotFound = lazy(() => import('./pages/PageNotFound'));
 
 const Nav = lazy(() => import('./components/Nav'));
@@ -15,6 +16,7 @@ const App: React.FC = () => {
 			<Nav />
 			<Routes>
 				<Route path="/" element={<HomePage />} />
+				<Route path="/products/:id" element={<Products />} />
 				<Route path="/dashboard" element={<Dashboard />}>
 					<Route path="settings" element={<Settings />} />
 					<Route path="profile" element={<Profile />} />
