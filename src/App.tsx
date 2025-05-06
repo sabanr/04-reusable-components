@@ -1,9 +1,17 @@
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import HomePage from './pages/Homepage';
+import Dashboard from './pages/Dashboard';
+import PageNotFound from './pages/PageNotFound';
+
 const App: React.FC = () => {
 	return (
-		<div>
-			<h1>Welcome to the App</h1>
-			<p>This is a simple React application.</p>
-		</div>
+		<BrowserRouter>
+			<Routes>
+				<Route path="/" element={<HomePage />} />
+				<Route path="/dashboard" element={<Dashboard />} />
+				<Route path="*" element={<PageNotFound />} />
+			</Routes>
+		</BrowserRouter>
 	);
 };
 export default App;
