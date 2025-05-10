@@ -1,7 +1,6 @@
-import { lazy, useState } from 'react';
+import { lazy } from 'react';
 // import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { UserContext } from './contexts/UserContext';
-
+import { UserProvider } from './contexts/UserContext';
 // const Profile = lazy(() => import('./pages/Profile'));
 // const HomePage = lazy(() => import('./pages/Homepage'));
 // const Settings = lazy(() => import('./pages/Settings'));
@@ -9,21 +8,14 @@ import { UserContext } from './contexts/UserContext';
 // const Dashboard = lazy(() => import('./pages/Dashboard'));
 const Checkout = lazy(() => import('./components/Checkout'));
 // const PageNotFound = lazy(() => import('./pages/PageNotFound'));
-
+const Login = lazy(() => import('./components/Login'));
 // const Nav = lazy(() => import('./components/Nav'));
 
 const App: React.FC = () => {
-	const [user, setUser] = useState<string>('guest');
-
 	return (
 		<>
-			<input
-				title="user"
-				type="text"
-				value={user}
-				onChange={(e) => setUser(e.target.value)}
-			/>
-			<UserContext.Provider value={user}>
+			<UserProvider>
+				<Login />
 				<Checkout />
 				{/* <BrowserRouter>
 					<Nav />
@@ -37,7 +29,7 @@ const App: React.FC = () => {
 						<Route path="*" element={<PageNotFound />} />
 					</Routes>
 				</BrowserRouter> */}
-			</UserContext.Provider>
+			</UserProvider>
 		</>
 	);
 };
